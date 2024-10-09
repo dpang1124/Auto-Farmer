@@ -23,27 +23,33 @@ def beginfarm():
         pyautogui.click()
         time.sleep(1)
         
-
 def endfarm():
     global running
     running = False
     print(f"running = {running}")
 
 def start_farm_thread():
-    threadfarm.daemon = True
-    threadfarm.start()
+    global threadfarm 
+    if(threadfarm == None):
+        threadfarm = threading.Thread(target=beginfarm)
+        threadfarm.daemon = True
+        threadfarm.start()
+    elif(threadfarm.is_alive()==False):
+        threadfarm = threading.Thread(target=beginfarm)
+        threadfarm.daemon = True
+        threadfarm.start()
 
 #you can use 'ctrl+s' for key combinations if you want to change
 keyboard.add_hotkey('9', start_farm_thread)
 keyboard.add_hotkey('0', endfarm)  
 
 #GUI
-threadfarm = threading.Thread(target=beginfarm)
+threadfarm = None
 root = tk.Tk()
-root.title("AutoFarm Gui")
+root.title("Auto Clicker")
 root.geometry("300x200")
-start_button = tk.Button(root, text="Start \ 9", command=start_farm_thread)
+start_button = tk.Button(root, text="Start / 9", command=start_farm_thread)
 start_button.pack(padx=20, pady=20)
-stop_button = tk.Button(root, text="Stop \ 0", command=endfarm)
+stop_button = tk.Button(root, text="Stop / 0", command=endfarm)
 stop_button.pack(padx=20, pady=20)
 root.mainloop()
