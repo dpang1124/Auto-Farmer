@@ -16,7 +16,7 @@ print(f"mouse x position: {currentMouseX}\n mouse y position: {currentMouseY}")
 running = False
 timebool = False
 screenshot = False
-timecounter = 0
+timecounter = 1
 holder = False
 threadfarm = None
 threadcounter = None
@@ -25,34 +25,16 @@ def beginfarm():
     global running
     running = True
     while(running):
-        pyautogui.click()
-        time.sleep(1)
-        if(holder):
-            #move mouse to green bar
+        if(screenshot):
+            #move mouse to green bar when green bar is full
             pyautogui.moveTo(955, 990)
             pyautogui.click()
-            time.sleep(1)
+            time.sleep(0.1)
             pyautogui.moveTo(955, 512)
-        if(holder):
-            #generate movement pattern 1
-            pyautogui.keyDown('w')
-            time.sleep(2)
-            pyautogui.keyUp('w')
-            time.sleep(2)
-            pyautogui.keyDown('a')
-            time.sleep(2)
-            pyautogui.keyUp('a')
-        if(holder):
-            #generate movement pattern 2
-            pyautogui.keyDown('d')
-            time.sleep(2)
-            pyautogui.keyUp('d')
-            time.sleep(2)
-            pyautogui.keyDown('s')
-            time.sleep(2)
-            pyautogui.keyUp('s')
-            
-
+        else:
+            pyautogui.click()
+            time.sleep(0.1)
+        
 def endfarm():
     global running
     running = False
@@ -71,13 +53,19 @@ def start_farm_thread():
 def count_time():
     global timebool
     timebool = True
-    timecounter = 0
+    timecounter = 1
     while(timebool):
         timecounter+=1
-        print(f"time = {timecounter}")
+        print(f"timecounter = {timecounter}")
         time.sleep(1)
+        if(timecounter%10==0):
+            #generate movement pattern 1 every 30 seconds
+            print(f"\n MOD 10 COMPLETE NOW MOVE, TIMECOUNTER = {timecounter} \n")
+        elif(timecounter%50==0):
+            #generate movement pattern 2 every 50 seconds
+            print(f"\n MOD 50 COMPLETE NOW MOVE, TIMECOUNTER = {timecounter} \n")
 
-def start_time_counter():
+def start_time_counter_thread():
     global threadcounter
     if(threadcounter == None):
         threadcounter= threading.Thread(target=count_time)
@@ -95,34 +83,22 @@ def StopAndReset_timer():
 #you can use 'ctrl+s' for key combos
 keyboard.add_hotkey('9', start_farm_thread)
 keyboard.add_hotkey('0', endfarm)  
+keyboard.add_hotkey('1', start_time_counter_thread)
+keyboard.add_hotkey('0', StopAndReset_timer)  
 
 #GUI
 root = tk.Tk()
 root.title("AutoFarmer")
 root.geometry("400x300")
-start_button = tk.Button(root, text="Start \ 9", command=start_farm_thread)
+start_button = tk.Button(root, text="Start / 9", command=start_farm_thread)
 start_button.pack(padx=20, pady=20)
-stop_button = tk.Button(root, text="Stop \ 0", command=endfarm)
+stop_button = tk.Button(root, text="Stop / 0", command=endfarm)
 stop_button.pack(padx=20, pady=20)
-start_time = tk.Button(root, text="TimeCounter", command=start_time_counter)
+start_time = tk.Button(root, text="TimeCounter / 1", command=start_time_counter_thread)
 start_time.pack(padx=20, pady=20)
-stop_time = tk.Button(root, text="Stop and Reset Timer", command=StopAndReset_timer)
+stop_time = tk.Button(root, text="Stop and Reset Timer / 2", command=StopAndReset_timer)
 stop_time.pack(padx=20, pady=20)
 root.mainloop()
-
-'''
-#move mouse to green bar
-pyautogui.dragTo(955, 990, 0)
-pyautogui.click()
-time.sleep(1)
-pyautogui.dragTo(955, 512, 0)
-'''
-
-
-
-
-
-
 
 
 """
