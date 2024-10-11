@@ -22,25 +22,46 @@ threadfarm = None
 threadcounter = None
 
 def beginfarm():
+    global timecounter
     global running
+    global timebool
     running = True
     while(running):
-        if(screenshot):
-            #move mouse to green bar when green bar is full
-            pyautogui.moveTo(955, 990)
+        if(timecounter%20==0):
+            time.sleep(2)
+            print("activating rebirth")
             pyautogui.click()
             time.sleep(0.1)
-            pyautogui.moveTo(955, 512)
+            pyautogui.moveTo(462, 374, duration=1)
+            pyautogui.click()
+            pyautogui.moveTo(974, 978, duration=1)
+            timecounter+=1
+            for i  in range(5):
+                pyautogui.click()
+                time.sleep(0.2)
+
+            time.sleep(0.1)
+            pyautogui.moveTo(462, 374, duration=1)
+            pyautogui.click()
+            pyautogui.moveTo(1197, 522,duration=1)
+            timecounter+=1
+            for i  in range(5):
+                pyautogui.click()
+                time.sleep(0.2)
+        
+        elif(timecounter%100==0):
+            time.sleep(4)
         else:
             pyautogui.click()
-            time.sleep(0.1)
-        
+            
+
 def endfarm():
     global running
     running = False
 
 def start_farm_thread():
     global threadfarm 
+    global timecounter
     if(threadfarm == None):
         threadfarm = threading.Thread(target=beginfarm)
         threadfarm.daemon = True
@@ -53,17 +74,29 @@ def start_farm_thread():
 def count_time():
     global timebool
     timebool = True
+    global timecounter
     timecounter = 1
     while(timebool):
         timecounter+=1
         print(f"timecounter = {timecounter}")
         time.sleep(1)
-        if(timecounter%10==0):
-            #generate movement pattern 1 every 30 seconds
-            print(f"\n MOD 10 COMPLETE NOW MOVE, TIMECOUNTER = {timecounter} \n")
-        elif(timecounter%50==0):
-            #generate movement pattern 2 every 50 seconds
-            print(f"\n MOD 50 COMPLETE NOW MOVE, TIMECOUNTER = {timecounter} \n")
+        if(timecounter%4==0):
+            keyboard.press('w')
+            time.sleep(0.1)  
+            keyboard.release('w')
+            keyboard.press('s')
+            time.sleep(0.1)  
+            keyboard.release('s')
+        if(timecounter%5==0):
+            keyboard.press('d')
+            time.sleep(0.1)  
+            keyboard.release('d')
+            keyboard.press('a')
+            time.sleep(0.1)  
+            keyboard.release('a')
+        if(timecounter%20==0):
+            time.sleep(20)
+        
 
 def start_time_counter_thread():
     global threadcounter
@@ -84,7 +117,7 @@ def StopAndReset_timer():
 keyboard.add_hotkey('9', start_farm_thread)
 keyboard.add_hotkey('0', endfarm)  
 keyboard.add_hotkey('1', start_time_counter_thread)
-keyboard.add_hotkey('0', StopAndReset_timer)  
+keyboard.add_hotkey('2', StopAndReset_timer)  
 
 #GUI
 root = tk.Tk()
@@ -99,6 +132,7 @@ start_time.pack(padx=20, pady=20)
 stop_time = tk.Button(root, text="Stop and Reset Timer / 2", command=StopAndReset_timer)
 stop_time.pack(padx=20, pady=20)
 root.mainloop()
+
 
 
 """
