@@ -86,12 +86,18 @@ def count_time():
             keyboard.release('d')
         elif(x==5):
             keyboard.press('space')
+            pyautogui.mouseDown(button="right")
             time.sleep(y)
             keyboard.release('space')
+            pyautogui.mouseUp(button="right")
         elif(x==6):
             keyboard.press('space')
-            time.sleep(1)
+            keyboard.press('w')
+            keyboard.press('s')
+            time.sleep(y)
             keyboard.release('space')
+            keyboard.release('w')
+            keyboard.release('s')
         elif(x==7):
             keyboard.press('w')
             keyboard.press('d')
