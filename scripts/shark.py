@@ -130,20 +130,18 @@ def StopAndReset_timer():
     timebool = False
 
 #you can use 'ctrl+s' for key combos
-keyboard.add_hotkey('9', start_farm_thread)
-keyboard.add_hotkey('0', endfarm)  
-keyboard.add_hotkey('1', start_time_counter_thread)
+keyboard.add_hotkey('1', endfarm)  
 keyboard.add_hotkey('2', StopAndReset_timer)  
 
 #GUI
 root = tk.Tk()
 root.title("AutoFarmer")
 root.geometry("400x300")
-start_button = tk.Button(root, text="Auto Rejoin / 9", command=start_farm_thread)
+start_button = tk.Button(root, text="Auto Rejoin", command=start_farm_thread)
 start_button.pack(padx=20, pady=20)
-stop_button = tk.Button(root, text="Stop Rejoin / 0", command=endfarm)
+stop_button = tk.Button(root, text="Stop Rejoin / 1", command=endfarm)
 stop_button.pack(padx=20, pady=20)
-start_time = tk.Button(root, text="Generate Movement / 1", command=start_time_counter_thread)
+start_time = tk.Button(root, text="Generate Movement", command=start_time_counter_thread)
 start_time.pack(padx=20, pady=20)
 stop_time = tk.Button(root, text="Stop Generated Movement / 2", command=StopAndReset_timer)
 stop_time.pack(padx=20, pady=20)
