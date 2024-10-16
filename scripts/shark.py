@@ -4,17 +4,18 @@ import tkinter as tk
 import threading
 import keyboard
 from numpy import random
-import easyocr
-
+#import easyocr
 
 
 #move mouse to corner of screen for emergency exit
 pyautogui.FAILSAFE=True
 screenWidth, screenHeight = pyautogui.size() 
 currentMouseX, currentMouseY = pyautogui.position() 
+#reader = easyocr.Reader(['en'])
 
 print(f"Current screen width: {screenWidth}\n Current screen height: {screenHeight}")
 print(f"mouse x position: {currentMouseX}\n mouse y position: {currentMouseY}")
+
 
 #autoclicker
 running = False
@@ -31,8 +32,11 @@ def beginfarm():
     global timebool
     running = True
     while(running):
-        time.sleep(1)
-        print("code not implemented yet\n")
+        x = random.randint(10)
+        y = random.randint(3)
+        for int in range(x):
+                pyautogui.click()
+                time.sleep(y)
 
 def endfarm():
     global running
@@ -59,8 +63,9 @@ def count_time():
         timecounter+=1
         print(f"timecounter = {timecounter}")
         time.sleep(1)
-        x=random.randint(6)
+        x=random.randint(9)
         y=random.randint(6)
+        z=random.randint(6)
         if(x==0):
             time.sleep(3)
         elif(x==1):
@@ -84,9 +89,29 @@ def count_time():
             time.sleep(y)
             keyboard.release('space')
         elif(x==6):
-            for int in range(y):
-                pyautogui.click()
-                time.sleep(.1)
+            keyboard.press('space')
+            time.sleep(1)
+            keyboard.release('space')
+        elif(x==7):
+            keyboard.press('w')
+            keyboard.press('d')
+            time.sleep(y)
+            keyboard.release('w')
+            keyboard.press('s')
+            time.sleep(y)
+            keyboard.release('d')
+            time.sleep(y)
+            keyboard.release('s')
+        elif(x==8):
+            keyboard.press('a')
+            keyboard.press('w')
+            time.sleep(y)
+            keyboard.release('a')
+            keyboard.press('d')
+            time.sleep(y)
+            keyboard.release('w')
+            time.sleep(y)
+            keyboard.release('d')
         
 
 def start_time_counter_thread():
