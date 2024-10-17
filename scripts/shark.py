@@ -4,6 +4,8 @@ import tkinter as tk
 import threading
 import keyboard
 from numpy import random
+import mouse
+
 #import easyocr
 
 
@@ -32,11 +34,12 @@ def beginfarm():
     global timebool
     running = True
     while(running):
-        x = random.randint(10)
-        y = random.randint(3)
-        for int in range(x):
-                pyautogui.click()
-                time.sleep(y)
+            x = random.randint(10)
+            y = random.randint(3)
+            for int in range(x):
+                    pyautogui.click()
+                    time.sleep(y)
+        
 
 def endfarm():
     global running
@@ -143,9 +146,9 @@ keyboard.add_hotkey('2', StopAndReset_timer)
 root = tk.Tk()
 root.title("AutoFarmer")
 root.geometry("400x300")
-start_button = tk.Button(root, text="Auto Rejoin", command=start_farm_thread)
+start_button = tk.Button(root, text="Random Clicks", command=start_farm_thread)
 start_button.pack(padx=20, pady=20)
-stop_button = tk.Button(root, text="Stop Rejoin / 1", command=endfarm)
+stop_button = tk.Button(root, text="Stop Random Clicks / 1", command=endfarm)
 stop_button.pack(padx=20, pady=20)
 start_time = tk.Button(root, text="Generate Movement", command=start_time_counter_thread)
 start_time.pack(padx=20, pady=20)
@@ -154,3 +157,65 @@ stop_time.pack(padx=20, pady=20)
 root.mainloop()
 
 
+
+'''
+    im1 = '../images/reconnect.png'
+    im2 = '../images/highdetailshark.png'
+    im3 = '../images/play.png'
+    im4 = '../images/sharkclose.png'
+    while(running):
+        
+        try:
+            location = pyautogui.locateOnScreen(im1)
+            if location:
+                print(f"Image found at: {location}")
+                time.sleep(1)
+                mouse.move(location.left, location.top, absolute=True, duration=2)
+                mouse.click('left')
+                time.sleep(1)
+                mouse.click('left')
+        except pyautogui.ImageNotFoundException:
+            print("Image not found, retrying..")
+        
+        time.sleep(5)
+
+        try:
+            location2 = pyautogui.locateOnScreen(im2)
+            if location2:
+                print(f"Details found at: {location2}")
+                time.sleep(1)
+                mouse.move(location2.left, location2.top, absolute=True, duration=2)
+                mouse.click('left')
+                time.sleep(1)
+                mouse.click('left')
+        except pyautogui.ImageNotFoundException:
+                print("detail image not found, retrying..")
+            
+        time.sleep(3)
+
+        try:
+            location3 = pyautogui.locateOnScreen(im3)
+            if location3:
+                print(f"Details found at: {location3}")
+                time.sleep(1)
+                mouse.move(location3.left, location3.top, absolute=True, duration=2)
+                mouse.click('left')
+                time.sleep(1)
+                mouse.click('left')
+        except pyautogui.ImageNotFoundException:
+                print("play image not found, retrying..")
+        
+        time.sleep(3)
+
+        try:
+            location4 = pyautogui.locateOnScreen(im4)
+            if location4:
+                print(f"Details found at: {location4}")
+                time.sleep(1)
+                mouse.move(location4.left, location4.top, absolute=True, duration=2)
+                mouse.click('left')
+                time.sleep(1)
+                mouse.click('left')
+        except pyautogui.ImageNotFoundException:
+                print("close image not found, retrying..")
+'''

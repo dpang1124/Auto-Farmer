@@ -4,6 +4,7 @@ import tkinter as tk
 import threading
 import keyboard
 from numpy import random
+import mouse
 
 #move mouse to corner of screen for emergency exit
 pyautogui.FAILSAFE=True
@@ -31,15 +32,32 @@ def beginfarm():
         if(timecounter%300==0):
             time.sleep(2)
             print("activating rebirth")
+            #implement sell
         elif(timecounter%5400==0):
-            print("collecting rewards and rejoining game")
+            #implement collecting rewards
+            time.sleep(5)
+            playbutton = '../images/playbutton.png'
+            keyboard.press_and_release('alt+tab')
             time.sleep(2)
+            try:
+                location = pyautogui.locateOnScreen(playbutton)
+                if location:
+                    print(f"Details found at: {location}")
+                    time.sleep(1)
+                    mouse.move(location.left, location.top, absolute=True, duration=2)
+                    mouse.click('left')
+                    time.sleep(1)
+                    mouse.click('left')
+                    time.sleep(1)
+                    keyboard.press_and_release('alt+tab')
+            except pyautogui.ImageNotFoundException:
+                print("play button not found")
+                time.sleep(3)
         else:
             for x in range(3):
                 pyautogui.click()
                 time.sleep(0.2)
             time.sleep(2)
-            
             
 
 def endfarm():
