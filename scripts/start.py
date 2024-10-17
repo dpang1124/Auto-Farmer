@@ -3,6 +3,7 @@ import time
 import tkinter as tk
 import threading
 import keyboard
+from numpy import random
 
 #move mouse to corner of screen for emergency exit
 pyautogui.FAILSAFE=True
@@ -27,32 +28,18 @@ def beginfarm():
     global timebool
     running = True
     while(running):
-        if(timecounter%20==0):
+        if(timecounter%300==0):
             time.sleep(2)
             print("activating rebirth")
-            pyautogui.click()
-            time.sleep(0.1)
-            pyautogui.moveTo(462, 374, duration=1)
-            pyautogui.click()
-            pyautogui.moveTo(974, 978, duration=1)
-            timecounter+=1
-            for i  in range(5):
-                pyautogui.click()
-                time.sleep(0.2)
-
-            time.sleep(0.1)
-            pyautogui.moveTo(462, 374, duration=1)
-            pyautogui.click()
-            pyautogui.moveTo(1197, 522,duration=1)
-            timecounter+=1
-            for i  in range(5):
-                pyautogui.click()
-                time.sleep(0.2)
-        
-        elif(timecounter%100==0):
-            time.sleep(4)
+        elif(timecounter%5400==0):
+            print("collecting rewards and rejoining game")
+            time.sleep(2)
         else:
-            pyautogui.click()
+            for x in range(3):
+                pyautogui.click()
+                time.sleep(0.2)
+            time.sleep(2)
+            
             
 
 def endfarm():
@@ -80,22 +67,25 @@ def count_time():
         timecounter+=1
         print(f"timecounter = {timecounter}")
         time.sleep(1)
-        if(timecounter%4==0):
+        x=random.randint(4)
+        if(x==0):
+            time.sleep(0)
+        elif(x==1):
             keyboard.press('w')
-            time.sleep(0.1)  
+            time.sleep(0.1)
             keyboard.release('w')
-            keyboard.press('s')
-            time.sleep(0.1)  
-            keyboard.release('s')
-        if(timecounter%5==0):
-            keyboard.press('d')
-            time.sleep(0.1)  
-            keyboard.release('d')
+        elif(x==2):
             keyboard.press('a')
-            time.sleep(0.1)  
+            time.sleep(0.1)
             keyboard.release('a')
-        if(timecounter%20==0):
-            time.sleep(20)
+        elif(x==3):
+            keyboard.press('s')
+            time.sleep(0.1)
+            keyboard.release('s')
+        elif(x==4):
+            keyboard.press('d')
+            time.sleep(0.1)
+            keyboard.release('d')
         
 
 def start_time_counter_thread():
@@ -123,36 +113,12 @@ keyboard.add_hotkey('2', StopAndReset_timer)
 root = tk.Tk()
 root.title("AutoFarmer")
 root.geometry("400x300")
-start_button = tk.Button(root, text="Start / 9", command=start_farm_thread)
+start_button = tk.Button(root, text="Click and Auto-Rejoin/ 9", command=start_farm_thread)
 start_button.pack(padx=20, pady=20)
-stop_button = tk.Button(root, text="Stop / 0", command=endfarm)
+stop_button = tk.Button(root, text="Stop Above / 0", command=endfarm)
 stop_button.pack(padx=20, pady=20)
-start_time = tk.Button(root, text="TimeCounter / 1", command=start_time_counter_thread)
+start_time = tk.Button(root, text="TimeCounter and Movement / 1", command=start_time_counter_thread)
 start_time.pack(padx=20, pady=20)
-stop_time = tk.Button(root, text="Stop and Reset Timer / 2", command=StopAndReset_timer)
+stop_time = tk.Button(root, text="Stop Above / 2", command=StopAndReset_timer)
 stop_time.pack(padx=20, pady=20)
 root.mainloop()
-
-
-
-"""
-cheat sheet provided by pyautogui documentation:
-
-screenWidth, screenHeight = pyautogui.size() # Get the size of the primary monitor.
-currentMouseX, currentMouseY = pyautogui.position() # Get the XY position of the mouse.
-
-pyautogui.moveTo(100, 150) # Move the mouse to XY coordinates.
-pyautogui.click() # Click the mouse.
-pyautogui.click(100, 200)  # Move the mouse to XY coordinates and click it.
-pyautogui.click('button.png') # Find where button.png appears on the screen and click it.
-pyautogui.move(400, 0)      # Move the mouse 400 pixels to the right of its current position.
-pyautogui.doubleClick()     # Double click the mouse.
-pyautogui.moveTo(500, 500, duration=2, tween=pyautogui.easeInOutQuad)  # Use tweening/easing function to move mouse over 2 seconds.
-pyautogui.write('Hello world!', interval=0.25)  # type with quarter-second pause in between each key
-pyautogui.press('esc')     # Press the Esc key. All key names are in pyautogui.KEY_NAMES
-with pyautogui.hold('shift'):  # Press the Shift key down and hold it.
-        pyautogui.press(['left', 'left', 'left', 'left'])  # Press the left arrow key 4 times.
-# Shift key is released automatically.
-pyautogui.hotkey('ctrl', 'c') # Press the Ctrl-C hotkey combination.
-pyautogui.alert('This is the message to display.') # Make an alert box appear and pause the program until OK is clicked.
-"""
