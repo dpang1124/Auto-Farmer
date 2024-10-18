@@ -39,8 +39,7 @@ def beginfarm():
             for int in range(x):
                     pyautogui.click()
                     time.sleep(y)
-        
-
+        #idk
 def endfarm():
     global running
     running = False
