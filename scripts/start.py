@@ -4,7 +4,9 @@ import tkinter as tk
 import threading
 import keyboard
 from numpy import random
-import mouse
+
+import autoit #pip install pyautoit
+
 
 #move mouse to corner of screen for emergency exit
 pyautogui.FAILSAFE=True
@@ -29,35 +31,114 @@ def beginfarm():
     global timebool
     running = True
     while(running):
-        if(timecounter%300==0):
+        if(timecounter%600==0):
             time.sleep(2)
             print("activating rebirth")
             #implement sell
-        elif(timecounter%5400==0):
+            autoit.mouse_move(968, 1019, speed=7)
+            autoit.mouse_click("left")
+            time.sleep(0.5)
+            autoit.mouse_click("left")
+            autoit.mouse_move(958, 500, speed=7)
+            time.sleep(1)
+        elif(timecounter%5450==0):
             #implement collecting rewards
-            time.sleep(5)
-            playbutton = '../images/playbutton.png'
+            time.sleep(1)
+            #reward open gui
+            autoit.mouse_move(39, 529, speed=5)
+            autoit.mouse_click("left")
+            
+            #reward 1
+            autoit.mouse_move(1080, 373, speed=5)
+            autoit.mouse_click("left")
+            time.sleep(0.1)
+            autoit.mouse_click("left")
+            time.sleep(4)
+            #reward 2
+            autoit.mouse_move(1280, 373, speed=5)
+            autoit.mouse_click("left")
+            time.sleep(0.1)
+            autoit.mouse_click("left")
+            time.sleep(4)
+            #reward 3
+            autoit.mouse_move(1480, 373, speed=5)
+            autoit.mouse_click("left")
+            time.sleep(0.1)
+            autoit.mouse_click("left")
+            time.sleep(4)
+            #reward 4
+            autoit.mouse_move(1080, 560, speed=5)
+            autoit.mouse_click("left")
+            time.sleep(0.1)
+            autoit.mouse_click("left")
+            time.sleep(4)
+            #reward 5
+            autoit.mouse_move(1280, 560, speed=5)
+            autoit.mouse_click("left")
+            time.sleep(0.1)
+            autoit.mouse_click("left")
+            time.sleep(4)
+            #reward 6
+            autoit.mouse_move(1480, 560, speed=5)
+            autoit.mouse_click("left")
+            time.sleep(0.1)
+            autoit.mouse_click("left")
+            time.sleep(4)
+            #reward 7
+            autoit.mouse_move(1080, 743, speed=5)
+            autoit.mouse_click("left")
+            time.sleep(0.1)
+            autoit.mouse_click("left")
+            time.sleep(4)
+            #reward 8
+            autoit.mouse_move(1280, 743, speed=5)
+            autoit.mouse_click("left")
+            time.sleep(0.1)
+            autoit.mouse_click("left")
+            time.sleep(4)
+            #reward 9
+            autoit.mouse_move(1480, 743, speed=5)
+            autoit.mouse_click("left")
+            time.sleep(0.1)
+            autoit.mouse_click("left")
+            time.sleep(4)
+            time.sleep(1)
+            #implement rejoin private server
             keyboard.press_and_release('alt+tab')
+            time.sleep(1)
+            autoit.mouse_move(587, 1012, speed=5)
+            autoit.mouse_click("left")
+            time.sleep(8)
+            autoit.mouse_click("left")
             time.sleep(2)
+            autoit.mouse_move(958, 500, speed=7)
+            autoit.mouse_click("left")
+            timecounter=0
+        else:
+            
             try:
-                location = pyautogui.locateOnScreen(playbutton)
+                reconnectbutton = '../images/reconnect.png'
+                location = pyautogui.locateOnScreen(reconnectbutton)
                 if location:
                     print(f"Details found at: {location}")
                     time.sleep(1)
-                    mouse.move(location.left, location.top, absolute=True, duration=2)
-                    mouse.click('left')
-                    time.sleep(1)
-                    mouse.click('left')
-                    time.sleep(1)
                     keyboard.press_and_release('alt+tab')
+                    time.sleep(1)
+                    autoit.mouse_move(587, 1012, speed=5)
+                    autoit.mouse_click("left")
+                    time.sleep(8)
+                    autoit.mouse_click("left")
+                    time.sleep(2)
+                    autoit.mouse_move(958, 500, speed=7)
+                    autoit.mouse_click("left")
+                    timecounter=0
             except pyautogui.ImageNotFoundException:
-                print("play button not found")
-                time.sleep(3)
-        else:
+                print("reconnect button not found")
+
             for x in range(3):
                 pyautogui.click()
                 time.sleep(0.2)
-            time.sleep(2)
+            time.sleep(1.5)
             
 
 def endfarm():
@@ -84,26 +165,28 @@ def count_time():
     while(timebool):
         timecounter+=1
         print(f"timecounter = {timecounter}")
+        
         time.sleep(1)
         x=random.randint(4)
         if(x==0):
             time.sleep(0)
         elif(x==1):
             keyboard.press('w')
-            time.sleep(0.1)
+            time.sleep(0.01)
             keyboard.release('w')
         elif(x==2):
             keyboard.press('a')
-            time.sleep(0.1)
+            time.sleep(0.01)
             keyboard.release('a')
         elif(x==3):
             keyboard.press('s')
-            time.sleep(0.1)
+            time.sleep(0.01)
             keyboard.release('s')
         elif(x==4):
             keyboard.press('d')
-            time.sleep(0.1)
+            time.sleep(0.01)
             keyboard.release('d')
+        
         
 
 def start_time_counter_thread():
