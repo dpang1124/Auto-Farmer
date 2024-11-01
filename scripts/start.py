@@ -48,7 +48,7 @@ def beginfarm():
             autoit.mouse_move(958, 500, speed=7)
             time.sleep(1)
             timecounter = 0
-        elif(secondtimecounter>=5):
+        elif(secondtimecounter>=5450):
             print("collecting rewards")
             #implement collecting rewards
             time.sleep(1)
@@ -127,7 +127,7 @@ def beginfarm():
             for x in range(4):
                 pyautogui.click()
                 time.sleep(0.2)
-            time.sleep(1)
+            time.sleep(1.9)
 
 def addtime():
     global timecounter
@@ -199,11 +199,17 @@ def start_time_counter_thread():
 def autorejoin():
     global timecounter
     global secondtimecounter
+    global running
+    global timebool
     while(True):
         try:
                     reconnectbutton = './reconnect.PNG'
                     location = pyautogui.locateOnScreen(reconnectbutton)
                     if location:
+                        if running == True:
+                            running = False
+                        if timebool == True:
+                            timebool = False
                         print(f"Details found at: {location}")
                         time.sleep(1)
                         keyboard.press_and_release('alt+tab')
@@ -217,6 +223,9 @@ def autorejoin():
                         autoit.mouse_click("left")
                         timecounter=0
                         secondtimecounter=0
+                       
+                        start_farm_thread()
+                        start_time_counter_thread
         except pyautogui.ImageNotFoundException:
                     print("reconnect button not found")
                     time.sleep(3)
@@ -225,6 +234,10 @@ def autorejoin():
                     reconnectbutton = './playbutton.png'
                     location = pyautogui.locateOnScreen(reconnectbutton)
                     if location:
+                        if running == True:
+                            running = False
+                        if timebool == True:
+                            timebool = False
                         print(f"Details found at: {location}")
                         time.sleep(1)
                         autoit.mouse_move(587, 1012, speed=5)
@@ -236,6 +249,9 @@ def autorejoin():
                         autoit.mouse_click("left")
                         timecounter=0
                         secondtimecounter=0
+                       
+                        start_time_counter_thread
+                        start_farm_thread()
         except pyautogui.ImageNotFoundException:
                     print("playbutton png not found")
                     time.sleep(3)
@@ -244,10 +260,17 @@ def autorejoin():
                     reconnectbutton = './interneterror.PNG'
                     location = pyautogui.locateOnScreen(reconnectbutton)
                     if location:
+                        if running == True:
+                            running = False
+                        if timebool == True:
+                            timebool = False
                         autoit.mouse_move(99, 62, speed=5)
                         time.sleep(0.5)
                         autoit.mouse_click("left")
                         time.sleep(2)
+        
+                        start_farm_thread()
+                        start_time_counter_thread
         except pyautogui.ImageNotFoundException:
                     print("interneterror png not found")
                     time.sleep(3)
@@ -255,6 +278,9 @@ def autorejoin():
 
 def start_rejoin_thread():
     global threadrejoin
+    keyboard.press('space')
+    time.sleep(0.1)
+    keyboard.release('space')
     if(threadrejoin == None):
         threadrejoin= threading.Thread(target=autorejoin)
         threadrejoin.daemon = True
@@ -274,6 +300,8 @@ keyboard.add_hotkey('0', endfarm)
 keyboard.add_hotkey('1', start_time_counter_thread)
 keyboard.add_hotkey('2', StopAndReset_timer)  
 
+
+
 #GUI
 root = tk.Tk()
 root.title("AutoFarmer")
@@ -288,6 +316,6 @@ stop_time = tk.Button(root, text="Stop Above / 2", command=StopAndReset_timer)
 stop_time.pack(padx=20, pady=20)
 add_time = tk.Button(root, text="Add 100 Seconds", command=addtime)
 add_time.pack(padx=20, pady=20)
-add_time = tk.Button(root, text="Auto Rejoin", command=start_rejoin_thread)
+add_time = tk.Button(root, text="Everything", command=start_rejoin_thread)
 add_time.pack(padx=20, pady=20)
 root.mainloop()
