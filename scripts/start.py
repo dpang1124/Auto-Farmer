@@ -212,9 +212,7 @@ def autorejoin():
                             timebool = False
                         print(f"Details found at: {location}")
                         time.sleep(1)
-                        keyboard.press_and_release('alt+tab')
-                        time.sleep(1)
-                        autoit.mouse_move(587, 1012, speed=5)
+                        autoit.mouse_move(location.left, location.top, speed=5)
                         autoit.mouse_click("left")
                         time.sleep(8)
                         autoit.mouse_click("left")
@@ -225,7 +223,7 @@ def autorejoin():
                         secondtimecounter=0
                        
                         start_farm_thread()
-                        start_time_counter_thread
+                        start_time_counter_thread()
         except pyautogui.ImageNotFoundException:
                     print("reconnect button not found")
                     time.sleep(3)
@@ -250,7 +248,7 @@ def autorejoin():
                         timecounter=0
                         secondtimecounter=0
                        
-                        start_time_counter_thread
+                        start_time_counter_thread()
                         start_farm_thread()
         except pyautogui.ImageNotFoundException:
                     print("playbutton png not found")
@@ -270,7 +268,7 @@ def autorejoin():
                         time.sleep(2)
         
                         start_farm_thread()
-                        start_time_counter_thread
+                        start_time_counter_thread()
         except pyautogui.ImageNotFoundException:
                     print("interneterror png not found")
                     time.sleep(3)
@@ -316,6 +314,6 @@ stop_time = tk.Button(root, text="Stop Above / 2", command=StopAndReset_timer)
 stop_time.pack(padx=20, pady=20)
 add_time = tk.Button(root, text="Add 100 Seconds", command=addtime)
 add_time.pack(padx=20, pady=20)
-add_time = tk.Button(root, text="Everything", command=start_rejoin_thread)
+add_time = tk.Button(root, text="Auto Rejoin", command=start_rejoin_thread)
 add_time.pack(padx=20, pady=20)
 root.mainloop()
