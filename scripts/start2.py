@@ -28,6 +28,26 @@ threadcounter = None
 threadrejoin = None
 secondtimecounter = 1
 
+def gotobigmap():
+    autoit.mouse_move(34, 595, speed=7)
+    time.sleep(1)
+    autoit.mouse_click()
+    autoit.mouse_move(950, 716, speed=7)
+    time.sleep(0.5)
+    autoit.mouse_click()
+    time.sleep(0.5)
+    autoit.mouse_click()
+    time.sleep(5)
+    autoit.mouse_move(930, 509, speed=7)
+    autoit.mouse_click()
+    time.sleep(0.5)
+    keyboard.press_and_release("esc")
+    time.sleep(0.5)
+    keyboard.press_and_release("r")
+    time.sleep(0.5)
+    keyboard.press_and_release("enter")
+    time.sleep(0.5)
+
 def beginfarm():
     global secondtimecounter
     global timecounter
@@ -47,8 +67,25 @@ def beginfarm():
             autoit.mouse_click("left")
             autoit.mouse_move(958, 500, speed=7)
             time.sleep(1)
+            keyboard.press_and_release("esc")
+            time.sleep(0.5)
+            keyboard.press_and_release("r")
+            time.sleep(0.5)
+            keyboard.press_and_release("enter")
+            time.sleep(0.5)
+            autoit.mouse_move(26, 1013, speed=7)
+            time.sleep(0.5)
+            autoit.mouse_click()
+            time.sleep(0.5)
+            autoit.mouse_move(962, 671, speed=7)
+            time.sleep(0.5)
+            autoit.mouse_click()
+            autoit.mouse_move(1148, 340, speed=7)
+            time.sleep(0.5)
+            autoit.mouse_click()
+            time.sleep(10)
             timecounter = 0
-        elif(secondtimecounter>=5450):
+        elif(secondtimecounter>=10):
             print("collecting rewards")
             #implement collecting rewards
             time.sleep(1)
@@ -121,6 +158,7 @@ def beginfarm():
             time.sleep(2)
             autoit.mouse_move(958, 500, speed=7)
             autoit.mouse_click("left")
+            gotobigmap()
             secondtimecounter = 0
         else:
             
@@ -163,25 +201,7 @@ def count_time():
         secondtimecounter+=1
         print(f"secondtimecounter = {secondtimecounter}")
         time.sleep(1)
-        x=random.randint(4)
-        if(x==0):
-            time.sleep(0)
-        elif(x==1):
-            keyboard.press('w')
-            time.sleep(0.01)
-            keyboard.release('w')
-        elif(x==2):
-            keyboard.press('a')
-            time.sleep(0.01)
-            keyboard.release('a')
-        elif(x==3):
-            keyboard.press('s')
-            time.sleep(0.01)
-            keyboard.release('s')
-        elif(x==4):
-            keyboard.press('d')
-            time.sleep(0.01)
-            keyboard.release('d')
+     
         
         
 
@@ -221,7 +241,8 @@ def autorejoin():
                         autoit.mouse_click("left")
                         timecounter=0
                         secondtimecounter=0
-                       
+
+                        gotobigmap()     
                         start_farm_thread()
                         start_time_counter_thread()
         except pyautogui.ImageNotFoundException:
@@ -247,7 +268,8 @@ def autorejoin():
                         autoit.mouse_click("left")
                         timecounter=0
                         secondtimecounter=0
-                       
+                        
+                        gotobigmap()
                         start_time_counter_thread()
                         start_farm_thread()
         except pyautogui.ImageNotFoundException:
@@ -266,7 +288,8 @@ def autorejoin():
                         time.sleep(0.5)
                         autoit.mouse_click("left")
                         time.sleep(2)
-        
+
+                        gotobigmap()
                         start_farm_thread()
                         start_time_counter_thread()
         except pyautogui.ImageNotFoundException:
