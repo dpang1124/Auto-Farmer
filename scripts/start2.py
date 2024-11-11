@@ -85,7 +85,7 @@ def beginfarm():
             autoit.mouse_click()
             time.sleep(10)
             timecounter = 0
-        elif(secondtimecounter>=10):
+        elif(secondtimecounter>=5450):
             print("collecting rewards")
             #implement collecting rewards
             time.sleep(1)
