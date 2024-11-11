@@ -62,7 +62,7 @@ def beginfarm():
     sells = 0
     running = True
     while(running):
-        if(timecounter>=450):
+        if(timecounter>=400):
             time.sleep(2)
             print(f"activating rebirth {sells}")
             sells += 1
@@ -208,9 +208,9 @@ def count_time():
     timecounter = 1
     while(timebool):
         timecounter+=1
-        print(f"timecounter = {timecounter}")
+        #print(f"timecounter = {timecounter}")
         secondtimecounter+=1
-        print(f"secondtimecounter = {secondtimecounter}")
+        #print(f"secondtimecounter = {secondtimecounter}")
         time.sleep(1)
         
      
@@ -244,6 +244,7 @@ def autorejoin():
                             timebool = False
                         print(f"Details found at: {location}")
                         time.sleep(1)
+                        '''
                         autoit.mouse_move(location.left, location.top, speed=5)
                         autoit.mouse_click("left")
                         time.sleep(8)
@@ -253,10 +254,14 @@ def autorejoin():
                         autoit.mouse_click("left")
                         timecounter=0
                         secondtimecounter=0
-
                         gotobigmap()     
                         start_farm_thread()
                         start_time_counter_thread()
+                        this doesn't work because clicking rejoin button puts you in public server
+                        '''
+                        keyboard.press_and_release('alt+tab')
+
+                        
         except pyautogui.ImageNotFoundException:
                     print("reconnect button not found")
                     time.sleep(3)
@@ -301,9 +306,6 @@ def autorejoin():
                         autoit.mouse_click("left")
                         time.sleep(2)
 
-                        gotobigmap()
-                        start_farm_thread()
-                        start_time_counter_thread()
         except pyautogui.ImageNotFoundException:
                     print("interneterror png not found")
                     time.sleep(3)
