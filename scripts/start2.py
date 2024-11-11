@@ -47,9 +47,11 @@ def gotobigmap():
     keyboard.press_and_release("r")
     time.sleep(0.5)
     keyboard.press_and_release("enter")
-    time.sleep(7)
+    time.sleep(8)
     keyboard.press('w')
+    keyboard.press('space')
     time.sleep(0.75)
+    keyboard.release('space')
     keyboard.release('w')
 
 def beginfarm():
@@ -87,9 +89,11 @@ def beginfarm():
             keyboard.press_and_release("r")
             time.sleep(0.5)
             keyboard.press_and_release("enter")
-            time.sleep(7)
+            time.sleep(8)
             keyboard.press('w')
-            time.sleep(1)
+            keyboard.press('space')
+            time.sleep(0.75)
+            keyboard.release('space')
             keyboard.release('w')
             timecounter = 0
         elif(secondtimecounter>=5450):
