@@ -29,6 +29,7 @@ threadrejoin = None
 secondtimecounter = 1
 
 def gotobigmap():
+    time.sleep(10)
     autoit.mouse_move(34, 595, speed=7)
     time.sleep(1)
     autoit.mouse_click()
