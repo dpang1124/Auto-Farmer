@@ -41,13 +41,16 @@ def gotobigmap():
     time.sleep(5)
     autoit.mouse_move(930, 509, speed=7)
     autoit.mouse_click()
-    time.sleep(0.5)
+    time.sleep(3)
     keyboard.press_and_release("esc")
     time.sleep(0.5)
     keyboard.press_and_release("r")
     time.sleep(0.5)
     keyboard.press_and_release("enter")
-    time.sleep(0.5)
+    time.sleep(7)
+    keyboard.press('w')
+    time.sleep(0.75)
+    keyboard.release('w')
 
 def beginfarm():
     global secondtimecounter
@@ -57,7 +60,7 @@ def beginfarm():
     sells = 0
     running = True
     while(running):
-        if(timecounter>=410):
+        if(timecounter>=450):
             time.sleep(2)
             print(f"activating rebirth {sells}")
             sells += 1
@@ -68,12 +71,6 @@ def beginfarm():
             autoit.mouse_click("left")
             autoit.mouse_move(958, 500, speed=7)
             time.sleep(1)
-            keyboard.press_and_release("esc")
-            time.sleep(0.5)
-            keyboard.press_and_release("r")
-            time.sleep(0.5)
-            keyboard.press_and_release("enter")
-            time.sleep(0.5)
             autoit.mouse_move(26, 1013, speed=7)
             time.sleep(0.5)
             autoit.mouse_click()
@@ -85,6 +82,15 @@ def beginfarm():
             time.sleep(0.5)
             autoit.mouse_click()
             time.sleep(10)
+            keyboard.press_and_release("esc")
+            time.sleep(0.5)
+            keyboard.press_and_release("r")
+            time.sleep(0.5)
+            keyboard.press_and_release("enter")
+            time.sleep(7)
+            keyboard.press('w')
+            time.sleep(1)
+            keyboard.release('w')
             timecounter = 0
         elif(secondtimecounter>=5450):
             print("collecting rewards")
@@ -202,6 +208,7 @@ def count_time():
         secondtimecounter+=1
         print(f"secondtimecounter = {secondtimecounter}")
         time.sleep(1)
+        
      
         
         
