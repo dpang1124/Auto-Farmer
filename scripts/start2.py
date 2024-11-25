@@ -62,7 +62,7 @@ def beginfarm():
     sells = 0
     running = True
     while(running):
-        if(timecounter>=400):
+        if(timecounter>=350):
             time.sleep(2)
             print(f"activating rebirth {sells}")
             sells += 1
@@ -97,6 +97,7 @@ def beginfarm():
             keyboard.release('w')
             timecounter = 0
         elif(secondtimecounter>=5450):
+            timecounter = 0
             print("collecting rewards")
             #implement collecting rewards
             time.sleep(1)
@@ -161,26 +162,19 @@ def beginfarm():
             time.sleep(1)
             #implement rejoin private server
             keyboard.press_and_release('alt+tab')
-            time.sleep(1)
-            autoit.mouse_move(587, 1012, speed=5)
-            autoit.mouse_click("left")
-            time.sleep(8)
-            autoit.mouse_click("left")
-            time.sleep(2)
-            autoit.mouse_move(958, 500, speed=7)
-            autoit.mouse_click("left")
-            gotobigmap()
-            secondtimecounter = 0
+            running = False
         else:
             
             for x in range(4):
                 pyautogui.click()
                 time.sleep(0.2)
-            time.sleep(1.9)
+            
 
 def addtime():
     global timecounter
-    timecounter += 100
+    global secondtimecounter
+    #timecounter += 100
+    secondtimecounter += 5450
     print(f"timecounter = {timecounter}")
 
 
@@ -276,7 +270,8 @@ def autorejoin():
                             timebool = False
                         print(f"Details found at: {location}")
                         time.sleep(1)
-                        autoit.mouse_move(587, 1012, speed=5)
+                        #autoit.mouse_move(587, 1012, speed=5)
+                        autoit.mouse_move(586, 977, speed=5)
                         autoit.mouse_click("left")
                         time.sleep(8)
                         autoit.mouse_click("left")
@@ -294,16 +289,16 @@ def autorejoin():
                     time.sleep(3)
         
         try:
-                    reconnectbutton = './interneterror.PNG'
+                    reconnectbutton = './leave.png'
                     location = pyautogui.locateOnScreen(reconnectbutton)
                     if location:
                         if running == True:
                             running = False
                         if timebool == True:
                             timebool = False
-                        autoit.mouse_move(99, 62, speed=5)
+                        
                         time.sleep(0.5)
-                        autoit.mouse_click("left")
+                        keyboard.press_and_release('alt+tab')
                         time.sleep(2)
 
         except pyautogui.ImageNotFoundException:
@@ -335,6 +330,7 @@ keyboard.add_hotkey('0', endfarm)
 keyboard.add_hotkey('1', start_time_counter_thread)
 keyboard.add_hotkey('2', StopAndReset_timer)  
 keyboard.add_hotkey('3', start_rejoin_thread)
+keyboard.add_hotkey('p', addtime)
 
 
 
@@ -350,7 +346,7 @@ start_time = tk.Button(root, text="TimeCounter and Movement / 1", command=start_
 start_time.pack(padx=20, pady=20)
 stop_time = tk.Button(root, text="Stop Above / 2", command=StopAndReset_timer)
 stop_time.pack(padx=20, pady=20)
-add_time = tk.Button(root, text="Add 100 Seconds", command=addtime)
+add_time = tk.Button(root, text="Add time test", command=addtime)
 add_time.pack(padx=20, pady=20)
 add_time = tk.Button(root, text="Auto Rejoin", command=start_rejoin_thread)
 add_time.pack(padx=20, pady=20)
