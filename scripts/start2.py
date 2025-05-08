@@ -62,7 +62,7 @@ def beginfarm():
     sells = 0
     running = True
     while(running):
-        if(timecounter>=350):
+        if(timecounter>=380):
             time.sleep(2)
             print(f"activating rebirth {sells}")
             sells += 1
@@ -229,7 +229,7 @@ def autorejoin():
     global timebool
     while(True):
         try:
-                    reconnectbutton = './reconnect.PNG'
+                    reconnectbutton = 'reconnect.PNG'
                     location = pyautogui.locateOnScreen(reconnectbutton)
                     if location:
                         if running == True:
@@ -261,7 +261,7 @@ def autorejoin():
                     time.sleep(3)
         time.sleep(0)
         try:
-                    reconnectbutton = './playbutton.png'
+                    reconnectbutton = 'playbutton.png'
                     location = pyautogui.locateOnScreen(reconnectbutton)
                     if location:
                         if running == True:
@@ -289,7 +289,7 @@ def autorejoin():
                     time.sleep(3)
         
         try:
-                    reconnectbutton = './leave.png'
+                    reconnectbutton = 'sameacc.png'
                     location = pyautogui.locateOnScreen(reconnectbutton)
                     if location:
                         if running == True:

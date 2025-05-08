@@ -28,6 +28,32 @@ threadcounter = None
 threadrejoin = None
 secondtimecounter = 1
 
+def gotobigmap():
+    time.sleep(10)
+    autoit.mouse_move(40, 626, speed=7)
+    time.sleep(1)
+    autoit.mouse_click()
+    autoit.mouse_move(950, 716, speed=7)
+    time.sleep(0.5)
+    autoit.mouse_click()
+    time.sleep(0.5)
+    autoit.mouse_click()
+    time.sleep(5)
+    autoit.mouse_move(930, 509, speed=7)
+    autoit.mouse_click()
+    time.sleep(3)
+    keyboard.press_and_release("esc")
+    time.sleep(0.5)
+    keyboard.press_and_release("r")
+    time.sleep(0.5)
+    keyboard.press_and_release("enter")
+    time.sleep(8)
+    keyboard.press('w')
+    keyboard.press('space')
+    time.sleep(0.75)
+    keyboard.release('space')
+    keyboard.release('w')
+
 def beginfarm():
     global secondtimecounter
     global timecounter
@@ -36,7 +62,7 @@ def beginfarm():
     sells = 0
     running = True
     while(running):
-        if(timecounter>=410):
+        if(timecounter>=380):
             time.sleep(2)
             print(f"activating rebirth {sells}")
             sells += 1
@@ -47,13 +73,38 @@ def beginfarm():
             autoit.mouse_click("left")
             autoit.mouse_move(958, 500, speed=7)
             time.sleep(1)
+            autoit.mouse_move(26, 1013, speed=7)
+            time.sleep(0.5)
+            autoit.mouse_click()
+            time.sleep(0.5)
+            autoit.mouse_move(962, 671, speed=7)
+            time.sleep(0.5)
+            autoit.mouse_click()
+            autoit.mouse_move(1148, 340, speed=7)
+            time.sleep(0.5)
+            autoit.mouse_click()
+            time.sleep(10)
+            keyboard.press_and_release("esc")
+            time.sleep(0.5)
+            keyboard.press_and_release("r")
+            time.sleep(0.5)
+            keyboard.press_and_release("enter")
+            time.sleep(8)
+            keyboard.press('w')
+            keyboard.press('space')
+            time.sleep(0.75)
+            keyboard.release('space')
+            keyboard.release('w')
             timecounter = 0
         elif(secondtimecounter>=5450):
+            timecounter = 0
             print("collecting rewards")
+            autoit.mouse_move(968, 1019, speed=7)
+            autoit.mouse_click("left")
             #implement collecting rewards
             time.sleep(1)
             #reward open gui
-            autoit.mouse_move(39, 529, speed=5)
+            autoit.mouse_move(40, 560, speed=5)
             autoit.mouse_click("left")
             
             #reward 1
@@ -113,25 +164,20 @@ def beginfarm():
             time.sleep(1)
             #implement rejoin private server
             keyboard.press_and_release('alt+tab')
-            time.sleep(1)
-            autoit.mouse_move(587, 1012, speed=5)
-            autoit.mouse_click("left")
-            time.sleep(8)
-            autoit.mouse_click("left")
-            time.sleep(2)
-            autoit.mouse_move(958, 500, speed=7)
-            autoit.mouse_click("left")
-            secondtimecounter = 0
+            running = False
+            autorejoin()
         else:
             
             for x in range(4):
                 pyautogui.click()
                 time.sleep(0.2)
-            time.sleep(1.9)
+            
 
 def addtime():
     global timecounter
-    timecounter += 100
+    global secondtimecounter
+    #timecounter += 380
+    secondtimecounter += 5450
     print(f"timecounter = {timecounter}")
 
 
@@ -163,28 +209,8 @@ def count_time():
         secondtimecounter+=1
         print(f"secondtimecounter = {secondtimecounter}")
         time.sleep(1)
-        x=random.randint(4)
-        if(x==0):
-            time.sleep(0)
-        elif(x==1):
-            keyboard.press('w')
-            time.sleep(0.01)
-            keyboard.release('w')
-        elif(x==2):
-            keyboard.press('a')
-            time.sleep(0.01)
-            keyboard.release('a')
-        elif(x==3):
-            keyboard.press('s')
-            time.sleep(0.01)
-            keyboard.release('s')
-        elif(x==4):
-            keyboard.press('d')
-            time.sleep(0.01)
-            keyboard.release('d')
         
-        
-
+    
 def start_time_counter_thread():
     global threadcounter
     if(threadcounter == None):
@@ -201,92 +227,29 @@ def autorejoin():
     global secondtimecounter
     global running
     global timebool
-    while(True):
-        try:
-                    reconnectbutton = './reconnect.PNG'
-                    location = pyautogui.locateOnScreen(reconnectbutton)
-                    if location:
-                        if running == True:
-                            running = False
-                        if timebool == True:
-                            timebool = False
-                        print(f"Details found at: {location}")
-                        time.sleep(1)
-                        autoit.mouse_move(location.left, location.top, speed=5)
-                        autoit.mouse_click("left")
-                        time.sleep(8)
-                        autoit.mouse_click("left")
-                        time.sleep(2)
-                        autoit.mouse_move(958, 500, speed=7)
-                        autoit.mouse_click("left")
-                        timecounter=0
-                        secondtimecounter=0
-                       
-                        start_farm_thread()
-                        start_time_counter_thread()
-        except pyautogui.ImageNotFoundException:
-                    print("reconnect button not found")
-                    time.sleep(3)
-        time.sleep(0)
-        try:
-                    reconnectbutton = './playbutton.png'
-                    location = pyautogui.locateOnScreen(reconnectbutton)
-                    if location:
-                        if running == True:
-                            running = False
-                        if timebool == True:
-                            timebool = False
-                        print(f"Details found at: {location}")
-                        time.sleep(1)
-                        autoit.mouse_move(587, 1012, speed=5)
-                        autoit.mouse_click("left")
-                        time.sleep(8)
-                        autoit.mouse_click("left")
-                        time.sleep(2)
-                        autoit.mouse_move(958, 500, speed=7)
-                        autoit.mouse_click("left")
-                        timecounter=0
-                        secondtimecounter=0
-                       
-                        start_time_counter_thread()
-                        start_farm_thread()
-        except pyautogui.ImageNotFoundException:
-                    print("playbutton png not found")
-                    time.sleep(3)
-        
-        try:
-                    reconnectbutton = './interneterror.PNG'
-                    location = pyautogui.locateOnScreen(reconnectbutton)
-                    if location:
-                        if running == True:
-                            running = False
-                        if timebool == True:
-                            timebool = False
-                        autoit.mouse_move(99, 62, speed=5)
-                        time.sleep(0.5)
-                        autoit.mouse_click("left")
-                        time.sleep(2)
-        
-                        start_farm_thread()
-                        start_time_counter_thread()
-        except pyautogui.ImageNotFoundException:
-                    print("interneterror png not found")
-                    time.sleep(3)
+    if running == True:
+        running = False
+    if timebool == True:
+        timebool = False
+    time.sleep(1)
+    autoit.mouse_move(586, 977, speed=5)
+    autoit.mouse_click("left")
+    time.sleep(8)
+    autoit.mouse_click("left")
+    time.sleep(2)
+    autoit.mouse_move(958, 500, speed=7)
+    autoit.mouse_click("left")
+    timecounter=0
+    secondtimecounter=0
+    
+    gotobigmap()
+    beginfarm()
+    count_time()
 
 
-def start_rejoin_thread():
-    global threadrejoin
-    keyboard.press('space')
-    time.sleep(0.1)
-    keyboard.release('space')
-    if(threadrejoin == None):
-        threadrejoin= threading.Thread(target=autorejoin)
-        threadrejoin.daemon = True
-        threadrejoin.start()
-    elif(threadrejoin.is_alive()==False):
-        threadrejoin = threading.Thread(target=autorejoin)
-        threadrejoin.daemon = True
-        threadrejoin.start()
+def quit_program(event=None):
+    root.destroy()
+    sys.exit()
 
 def StopAndReset_timer():
     global timebool
@@ -297,7 +260,8 @@ keyboard.add_hotkey('9', start_farm_thread)
 keyboard.add_hotkey('0', endfarm)  
 keyboard.add_hotkey('1', start_time_counter_thread)
 keyboard.add_hotkey('2', StopAndReset_timer)  
-keyboard.add_hotkey('3', start_rejoin_thread)
+keyboard.add_hotkey('p', addtime)
+keyboard.add_hotkey('shift+a', quit_program)
 
 
 
@@ -313,8 +277,10 @@ start_time = tk.Button(root, text="TimeCounter and Movement / 1", command=start_
 start_time.pack(padx=20, pady=20)
 stop_time = tk.Button(root, text="Stop Above / 2", command=StopAndReset_timer)
 stop_time.pack(padx=20, pady=20)
-add_time = tk.Button(root, text="Add 100 Seconds", command=addtime)
+add_time = tk.Button(root, text="Add time test / p", command=addtime)
 add_time.pack(padx=20, pady=20)
-add_time = tk.Button(root, text="Auto Rejoin", command=start_rejoin_thread)
+add_time = tk.Button(root, text="Auto Rejoin", command=autorejoin)
 add_time.pack(padx=20, pady=20)
+quit_button = tk.Button(root, text="Quit / Shift+A", command=quit_program)
+quit_button.pack(padx=20, pady=20)
 root.mainloop()
