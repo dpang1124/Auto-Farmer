@@ -289,6 +289,11 @@ def farm_loop():
         autoit.mouse_click()
         time.sleep(0.01)
 
+        #cancel button
+        autoit.mouse_move(960, 561, speed=10)
+        autoit.mouse_click()
+        time.sleep(0.01)
+
         
         #press X button on bounties
         autoit.mouse_move(1287, 242, speed=10)
@@ -302,7 +307,7 @@ def farm_loop():
 
         autoit.mouse_move(788, 817, speed=2)
         autoit.mouse_click()
-        time.sleep(0.01)
+        time.sleep(0.01) 
 
         autoit.mouse_move(902, 186, speed=10)
         autoit.mouse_click()

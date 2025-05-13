@@ -4,131 +4,163 @@ import autoit
 import keyboard
 import tkinter as tk
 
+
 # Global variables
 timecounter = 0
 running = False
 time_thread = None
+farm_phase = True
+extra_unit_placed = False
+start_time = time.time()
 
-def count_time(): #sukuna use dante
-    global timecounter, running
+farm_loop_counter = 0
+
+
+def count_time():
+    global timecounter, running, farm_phase, extra_unit_placed, farm_loop_counter, start_time
 
     running = True
+    start_time = time.time()
+
     while running:
+        elapsed_time = time.time() - start_time
         timecounter += 1
         time_label.config(text=f"Time: {timecounter} cycles")
 
-        # === STEP 1: PLACE UNIT 1 ===
-        keyboard.press('3')  # Press '3' to select the unit
-        time.sleep(0.1)  # Sleep for a moment to ensure it's selected
-        keyboard.release('3')  # Release '3'
-        time.sleep(0.02)
+        if elapsed_time >780: 
+            # === RESTART & VOTESKIP & RESET TIMER SO FARM STARTS AGAIN ===
+            autoit.mouse_move(788, 817, speed=2)
+            autoit.mouse_click()
+            time.sleep(0.01)
 
-        # Move mouse to the first coordinate (1039, 452) and click to place the unit
-        autoit.mouse_move(1039, 452, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)  # Small delay after clicking
+            autoit.mouse_move(902, 186, speed=10)
+            autoit.mouse_click()
+            time.sleep(0.01)
 
-        keyboard.press('q')  # Press 'q' to cancel
-        time.sleep(0.02)
-        keyboard.release('q')  # Release 'q'
-        time.sleep(0.01)
+            farm_loop_counter = 0
+            extra_unit_placed = False
+            elapsed_time = 0
+            start_time = time.time()
 
-        # === STEP 2: PLACE UNIT 2 ===
-        keyboard.press('3')  # Press '3' to select the unit
-        time.sleep(0.1)
-        keyboard.release('3')
-        time.sleep(0.02)
+        # FARM PHASE (first 3 minutes)
+        if elapsed_time < 150:
 
-        # Move mouse to the second coordinate (944, 501) and click to place the unit
-        autoit.mouse_move(944, 501, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)
+            # === PLACE FARM UNIT 5 ===
+            keyboard.press_and_release('5')
+            time.sleep(0.12)
 
-        keyboard.press('q')  # Press 'q' to cancel
-        time.sleep(0.02)
-        keyboard.release('q')
-        time.sleep(0.01)
+            autoit.mouse_move(549, 550, speed=10)  # slightly more left
+            autoit.mouse_click()
+            time.sleep(0.01)
 
-        # === STEP 3: PLACE UNIT 3 ===
-        keyboard.press('3')  # Press '3' to select the unit
-        time.sleep(0.1)
-        keyboard.release('3')
-        time.sleep(0.02)
+            keyboard.press_and_release('q')
+            time.sleep(0.03)
 
-        # Move mouse to the third coordinate (1053, 555) and click to place the unit
-        autoit.mouse_move(1053, 555, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)
-
-        keyboard.press('q')  # Press 'q' to cancel
-        time.sleep(0.02)
-        keyboard.release('q')
-        time.sleep(0.01)
-
-        # === STEP 4: UPGRADE UNIT 1 ===
-        # Click on the first placed unit (1039, 452)
-        autoit.mouse_move(1039, 452, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)
-
-        # Click the upgrade button (395, 645)
-        autoit.mouse_move(395, 645, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)
+            # === UPGRADE UNIT 5 ===
+            autoit.mouse_move(549, 550, speed=10)
+            autoit.mouse_click()
+            time.sleep(0.01)
+            autoit.mouse_move(395, 645, speed=10)
+            autoit.mouse_click()
+            time.sleep(0.01)
 
 
-        # === STEP 5: UPGRADE UNIT 2 ===
-        # Click on the second placed unit (944, 501)
-        autoit.mouse_move(944, 501, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)
+            # === PLACE FARM UNIT 6 (3 TIMES) ===
+            unit6_positions = [(543, 669), (529, 777), (549, 870)]
+            for pos in unit6_positions:
+                keyboard.press_and_release('6')
+                time.sleep(0.12)
 
-        # Click the upgrade button (395, 645)
-        autoit.mouse_move(395, 645, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)
+                autoit.mouse_move(pos[0], pos[1], speed=10)
+                autoit.mouse_click()
+                time.sleep(0.01)
 
+                keyboard.press_and_release('q')
+                time.sleep(0.03)
 
-
-        # === STEP 6: UPGRADE UNIT 3 ===
-        # Click on the third placed unit (1053, 555)
-        autoit.mouse_move(1053, 555, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)
-
-        # Click the upgrade button (395, 645)
-        autoit.mouse_move(395, 645, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)
+                # === UPGRADE UNIT 6 ===
+                autoit.mouse_move(pos[0], pos[1], speed=10)
+                autoit.mouse_click()
+                time.sleep(0.01)
+                autoit.mouse_move(395, 645, speed=10)
+                autoit.mouse_click()
+                time.sleep(0.01)
 
 
-        # === STEP 7: RESTART AND VOTESKIP ===
-        # Restart button (1164, 795)
-        autoit.mouse_move(788, 817, speed=2)
-        autoit.mouse_click()
-        time.sleep(0.01)
+            farm_loop_counter += 1
 
-        # Votekick button (902, 186)
-        autoit.mouse_move(902, 186, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)
+            # === After 10 loops, place special unit (4) ===
+            if farm_loop_counter >= 10 and not extra_unit_placed:
+                    for i in range(2):
+                        time.sleep(1)
+                        keyboard.press_and_release('4')
+                        time.sleep(0.12)
 
-        #press X button on bounties
-        autoit.mouse_move(1287, 242, speed=10)
-        autoit.mouse_click()
-        time.sleep(0.01)
+                        autoit.mouse_move(950, 611, speed=10)
+                        autoit.mouse_click()
+                        time.sleep(0.01)
+
+                        keyboard.press_and_release('q')
+                        
+                        extra_unit_placed = True
+                        time.sleep(10)
+                        autoit.mouse_click()
+
+        else:
+            # === NORMAL UNIT PLACEMENT CYCLE ===
+
+            unit3_positions = [
+                (1039, 452), #whoevers in slot 3
+                (944, 501),
+                (1053, 555),
+                (950, 611),#whoevers in slot 4 (rogita unit)
+            ]
+
+            for pos in unit3_positions:
+                keyboard.press_and_release('3')
+                time.sleep(0.12)
+
+                autoit.mouse_move(pos[0], pos[1], speed=10)
+                autoit.mouse_click()
+                time.sleep(0.01)
+
+                keyboard.press_and_release('q')
+                time.sleep(0.03)
+
+            # === UPGRADE ALL 3 UNITS ===
+            for pos in unit3_positions:
+                autoit.mouse_move(pos[0], pos[1], speed=10)
+                autoit.mouse_click()
+                time.sleep(0.01)
+                autoit.mouse_move(395, 645, speed=10)
+                autoit.mouse_click()
+                time.sleep(0.01)
 
         if not running:
             break
 
+
+def start_stop_time_counter():
+    global running, time_thread
+    if not running:
+        start_time_counter()
+    else:
+        stop_time_counter()
+
+
 def start_time_counter():
-    global time_thread, running
+    global time_thread, running, farm_phase, extra_unit_placed, farm_loop_counter
     if not running:
         running = True
+        farm_phase = True
+        extra_unit_placed = False
+        farm_loop_counter = 0
+
         time_thread = threading.Thread(target=count_time, daemon=True)
         time_thread.start()
         start_button.config(state=tk.DISABLED)
         stop_button.config(state=tk.NORMAL)
+
 
 def stop_time_counter():
     global running
@@ -136,12 +168,14 @@ def stop_time_counter():
     start_button.config(state=tk.NORMAL)
     stop_button.config(state=tk.DISABLED)
 
+
 def quit_program():
     global running
     running = False
     root.destroy()
 
-keyboard.add_hotkey('9', start_time_counter)
+
+keyboard.add_hotkey('9', start_stop_time_counter)
 keyboard.add_hotkey('8', stop_time_counter)
 keyboard.add_hotkey('0', quit_program)
 
